@@ -1,0 +1,70 @@
+================================================================================
+  FINAL ANALYTICS REPORT — AI vs Human Research Text
+================================================================================
+
+DATASET SUMMARY
+  • Total samples (clean)  : 6,069
+  • AI texts               : 3,069  (50.6%)
+  • Human texts            : 3,000  (49.4%)
+  • Duplicates removed     : 0 rows
+  • Missing values removed : handled
+
+────────────────────────────────────────────────────────────────────────────────
+KEY PATTERNS DISCOVERED
+────────────────────────────────────────────────────────────────────────────────
+
+1. TEXT LENGTH
+   AI texts are substantially SHORTER than human texts:
+   • AI mean word count    : 44 words
+   • Human mean word count : 271 words
+   This aligns with AI-generated abstracts/summaries vs full human papers.
+
+2. VOCABULARY RICHNESS (Type-Token Ratio)
+   • AI   TTR : 0.862
+   • Human TTR: 0.571
+   AI texts show higher lexical diversity per token —
+   likely due to shorter texts inflating TTR artificially.
+
+3. READABILITY
+   • AI   Flesch score : 18.9   Gunning Fog: 18.5
+   • Human Flesch score: 16.4   Gunning Fog: 19.8
+   Both groups produce similarly complex academic language (expected for research).
+   AI texts trend toward slightly simpler sentence structures.
+
+4. SENTENCE STRUCTURE
+   • AI   avg sentence length : 15.5 words/sentence
+   • Human avg sentence length: 18.6 words/sentence
+
+5. MOST DISCRIMINATIVE FEATURES (TF-IDF)
+   Top AI tokens     : we, the, uses
+   Top Human tokens  : and, were, was, as, study, these
+
+────────────────────────────────────────────────────────────────────────────────
+MODEL PERFORMANCE
+────────────────────────────────────────────────────────────────────────────────
+  Best model       : Logistic Regression
+  Accuracy         : 0.9926
+  Weighted F1      : 0.9926
+  Cross-val F1 (5×): 0.9951 ± 0.0018
+
+  Both TF-IDF + LR and TF-IDF + NB achieve strong performance, confirming that
+  surface-level lexical patterns are highly discriminative between AI and Human
+  research texts.
+
+────────────────────────────────────────────────────────────────────────────────
+RECOMMENDATIONS FOR IMPROVEMENT
+────────────────────────────────────────────────────────────────────────────────
+  1. Transformer-based embeddings (e.g., BERT, RoBERTa, DeBERTa) will capture
+     semantic nuance beyond n-gram statistics.
+  2. Use length-normalised features (per-sentence metrics) to control for the
+     strong length confound between AI and Human texts.
+  3. Add perplexity scores from a language model as a meta-feature — AI text
+     tends to have lower LM perplexity.
+  4. Collect more balanced data if class imbalance grows; consider augmentation
+     or weighted loss functions.
+  5. Incorporate stylometric features: punctuation density, passive voice ratio,
+     hedge word frequency (may, might, perhaps), citation density.
+  6. Run ablation studies to identify which feature groups (lexical / syntactic /
+     readability) contribute most to classification.
+
+================================================================================
